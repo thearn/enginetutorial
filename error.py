@@ -51,16 +51,16 @@ class Error(Component):
         
         self.norm = np.linalg.norm([self.current_speed - self.target_speed])**2
 
-    def list_deriv_vars(self): 
-        return ('current_speed','target_speed'),( 'norm',)
+    # def list_deriv_vars(self): 
+    #     return ('current_speed','target_speed'),( 'norm',)
 
-    def provideJ(self): 
-        dnorm_dcurrent_speed = 2 * (self.current_speed-self.target_speed)
-        dnorm_dtarget_speed = 2 * (self.target_speed-self.current_speed)
+    # def provideJ(self): 
+    #     dnorm_dcurrent_speed = 2 * (self.current_speed-self.target_speed)
+    #     dnorm_dtarget_speed = 2 * (self.target_speed-self.current_speed)
 
-        J = array([[dnorm_dcurrent_speed, dnorm_dtarget_speed]])
+    #     J = np.array([[dnorm_dcurrent_speed, dnorm_dtarget_speed]])
 
-        return J
+    #     return J
     # def apply_deriv(self, arg, result): 
         
     #     if 'current_speed' in arg: 
