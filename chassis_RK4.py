@@ -19,16 +19,16 @@ class Chassis(rk4.RK4):
 
 
 
-    Cf = Float(0.035, iotype='in', 
+    Cf = Float(0.035, iotype='in',
                     desc='Friction Coefficient (multiplies W)')
-    Cd = Float(0.3, iotype='in', 
+    Cd = Float(0.3, iotype='in',
                desc='Drag Coefficient (multiplies V**2)')
-    area = Float(2.164, iotype='in', units='m**2', 
+    area = Float(2.164, iotype='in', units='m**2',
                       desc='Frontal area')
     mass_engine = Float(200.0, iotype='in', units='kg',
                              desc='Engine weight estimation')
-    
-    tire_circ = Float(1.905, iotype='in', units='m', 
+
+    tire_circ = Float(1.905, iotype='in', units='m',
                            desc='Circumference of tire')
 
     #state variables
@@ -39,10 +39,10 @@ class Chassis(rk4.RK4):
 
     #external variables
     t = Array([], iotype="in")
-    torque_ratio = Array([], iotype='in', 
+    torque_ratio = Array([], iotype='in',
                          desc='Ratio of output torque to engine torque')
-    engine_torque = Array([], iotype='in', units='N*m', 
-                            desc='Torque at wheels')        
+    engine_torque = Array([], iotype='in', units='N*m',
+                            desc='Torque at wheels')
 
     def __init__(self, h = 4, end_time=764):
 
@@ -77,7 +77,7 @@ class Chassis(rk4.RK4):
 
         #print sign_V*(friction +drag), V, sign_V
 
-        
+
         #acceleration = (torque/tire_radius - sign_V*(friction +drag))/mass
         acceleration = (torque/tire_radius)/mass
         m_dot = -0.001*t  #fuel burn rate (kg/s)
@@ -87,7 +87,7 @@ class Chassis(rk4.RK4):
 
         return f_dot
 
-    def list_deriv_vars(self): 
+    def list_deriv_vars(self):
         return ("t", "torque_ratio", "engine_torque", "state_init",),("state",)
 
     def df_dy(self, external, state):
@@ -130,8 +130,8 @@ if __name__ == '__main__':
 
     trial.run()
 
-    trial.check_gradient()
-    
+    #trial.check_gradient()
+
 
     import matplotlib.pyplot as plt
     plt.plot(trial.t, trial.state[0])
@@ -148,7 +148,3 @@ if __name__ == '__main__':
     plt.title('torque vs time')
     plt.plot(trial.t, trial.engine_torque)
     plt.show()
-
-
-
-        

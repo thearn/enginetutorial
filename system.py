@@ -11,7 +11,7 @@ import rk4
 from openmdao.lib.drivers.api import SLSQPdriver, NewtonSolver
 
 from chassis_RK4 import Chassis
-from error import Error 
+from error import Error
 import time
 
 class System(Assembly):
@@ -19,7 +19,7 @@ class System(Assembly):
      def configure(self):
         self.add('chassis', Chassis())
         self.add('error', Error())
-        
+
         self.connect('chassis.state[1]', 'error.current_speed')
         self.add('driver', SLSQPdriver())
         self.driver.add_objective('sum(chassis.engine_torque)')
@@ -29,10 +29,10 @@ class System(Assembly):
         self.driver.add_constraint('error.norm=0')
         self.driver.accuracy = 1.0e-16
         self.driver.maxiter = 100
-        
+
         self.driver.gradient_options.force_fd = False
         self.driver.workflow.add(['chassis', 'error'])
-         
+
 
 if __name__ == '__main__':
 
@@ -45,7 +45,7 @@ if __name__ == '__main__':
 
     """
 
-    trial = set_as_top(System()) 
+    trial = set_as_top(System())
     t0 = time.clock()
 
     # from openmdao.util.dotgraph import plot_system_tree
@@ -71,6 +71,3 @@ if __name__ == '__main__':
     plt.title("torque ratio")
     plt.plot(trial.chassis.t, trial.chassis.torque_ratio,c='b')
     plt.show()
-
-
-
